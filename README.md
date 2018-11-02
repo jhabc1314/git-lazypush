@@ -1,8 +1,11 @@
 # git-lazypush
+
 lazy push branch to origin test branch
 
 ## 介绍（introduction）
+
 1. `git` 懒人提交大法
+
 2. 如果你的提交代码测试流程如下：
 
     . 创建开发分支 `dev`
@@ -16,6 +19,7 @@ lazy push branch to origin test branch
     . 推送测试分支到远程（`git push origin test`）
 
 3. 如果满足以上开发流程那么你有没有为每次的 `checkout` , `commit` , `push` 感到无聊呢？ 
+
 4. 懒人提交正是整合了这些提交步骤，让你可以一个命令完成以上所有步骤的操作
 
 ## 使用方法（How To Use）
@@ -44,7 +48,7 @@ lazy push branch to origin test branch
 
 2. 进入 `git bash` ， `pwd` 可以查看当前目录所在的路径，默认为 `/c/Users/yourname` ，即C盘Users下你的个人用户目录
 
-3. 在 `bash` 的当前目录下克隆本仓库代码到本地仓库，此时的仓库路径为 `~/git-lazypush/` 
+3. 在 `bash` 的当前目录下克隆本仓库代码到本地仓库，此时的仓库路径为 `~/git-lazypush/`
 
 4. 添加命令别名，名字可以自己定义 alias pp='~/git-lazypush/lazypush.sh'
 
