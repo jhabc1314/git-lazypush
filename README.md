@@ -40,6 +40,7 @@ lazy push branch to origin test branch
 可以将 ～/git-lazypush/lazypush.sh 添加为 别名 alias
 例如 alias pp='～/git-lazypush/lazypush.sh'
 这样 pp head 即可提交当前所在分支到远程分支
+pp 或者 pp help 可以查看命令帮助
 ```
 
 ### Windows
@@ -57,6 +58,8 @@ lazy push branch to origin test branch
 6. 进入到需要提交的 `git` 分支目录
 
 7. 执行命令 `pp head` 按提示确认是否提交代码到远程分支即可
+
+8. `pp` 或者 `pp help` 可以查看帮助
 
 ## 联系我（Contact Me）
 
