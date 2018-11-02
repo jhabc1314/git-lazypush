@@ -14,7 +14,7 @@ function help()
 # param1：需要合并提交到测试的分支名称    #
 # param2：提交备注，不填默认为fix         #
 # 举例：./lazypush.sh fixBug '修复bug'    #
-# 建议：将lazypush.sh添加到别名例如 pp  #
+# 建议：将lazypush.sh添加到别名例如 pp    #
 # 优雅：pp fixBug '修复bug'               #
 # 进阶：懒得写分支名?使用pp head [param2] #
 # 即可提交项目的当前分支,一定要确认好哦   #
