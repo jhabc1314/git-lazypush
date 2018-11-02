@@ -1,5 +1,6 @@
 #! /bin/bash
 
+readonly pushbranch="test" #默认推送到的测试分支名
 
 # 帮助函数
 function help()
@@ -115,7 +116,6 @@ confirm_branch()
 
 #获取命令
 branch=$1
-readonly pushbranch="test" #默认推送到的测试分支名
 
 if [[ -z $branch || $branch = "help" ]] 
 then
