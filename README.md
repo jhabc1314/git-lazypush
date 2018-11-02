@@ -2,7 +2,7 @@
 
 lazy push branch to origin test branch
 
-## 介绍（introduction）
+## 介绍（Introduction）
 
 1. `git` 懒人提交大法
 
