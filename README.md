@@ -57,5 +57,5 @@ lazy push branch to origin test branch
 ## 联系我（Contact Me）
 
 ``` 
-有使用问题可以提交issues 或者直接邮箱联系 jh1139209675@gmail.com
+有任何使用问题欢迎提交issues 或者直接邮箱联系我 jh1139209675@gmail.com
 ```
