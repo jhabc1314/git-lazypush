@@ -20,7 +20,7 @@ lazy push branch to origin test branch
 
 ## 使用方法（How To Use）
 
-### Linux
+### Linux Or Mac
 
 1. 克隆本仓库代码到本地仓库 例如本地仓库路径为 `～/git-lazypush`
 
