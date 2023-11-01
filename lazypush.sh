@@ -26,7 +26,7 @@ The branchname are:
 
 The comment are:
 
-	本次提交的说明, 不填默认 'fix'
+	本次提交的注释说明, 不填默认 'fix'. 注释有空格时必须要引号包裹
 
 Additional help:
 
