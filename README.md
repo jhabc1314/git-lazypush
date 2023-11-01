@@ -1,6 +1,6 @@
 # git-lazypush
 
-lazy push branch to origin test branch
+lazy push branch to origin develop branch
 
 ## 介绍（Introduction）
 
@@ -28,13 +28,13 @@ lazy push branch to origin test branch
 
 1. 克隆本仓库代码到本地仓库 例如本地仓库路径为 `～/git-lazypush`
 
-2. 默认的远程测试分支名称为 `test`，如果不一样需要修改 `~/git-lazypush/lazypush.sh` 文件的第三行的分支名称
+2. 默认的远程测试分支名称为 `develop`，如需修改可以在项目中添加 `.lazy_git` 文件指定远端的分支名
 
-3. 进入到需要提交的 `git` 分支目录
+3. 进入到需要提交的 `git` 项目目录
 
 4. 执行命令 `～/git-lazypush/lazypush.sh head`
 
-5. 按照提示确认是否提交仓库代码
+5. 按照提示确认是否成功提交仓库代码
 
 ```
 可以将 ～/git-lazypush/lazypush.sh 添加为 别名 alias
@@ -53,7 +53,7 @@ pp 或者 pp help 可以查看命令帮助
 
 4. 添加命令别名，名字可以自己定义 alias pp='~/git-lazypush/lazypush.sh'
 
-5. 默认的远程测试分支名称为 `test`，如果不一样需要修改 `~/git-lazypush/lazypush.sh` 文件的第三行的分支名称
+5. 默认的远程测试分支名称为 `develop`，如需修改可以在项目中添加 `.lazy_git` 文件指定远端的分支名
 
 6. 进入到需要提交的 `git` 分支目录
 
@@ -64,5 +64,5 @@ pp 或者 pp help 可以查看命令帮助
 ## 联系我（Contact Me）
 
 ``` 
-有任何使用问题欢迎提交issues 或者直接邮箱联系我 jh1139209675@gmail.com
+有任何使用问题欢迎提交 issues
 ```

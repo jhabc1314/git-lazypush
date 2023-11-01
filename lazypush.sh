@@ -1,9 +1,17 @@
 #! /bin/bash
 
+# 定义颜色变量
+RED='\e[1;31m' # 红
+GREEN='\e[1;32m' # 绿
+# YELLOW='\e[1;33m' # 黄
+# BLUE='\e[1;34m' # 蓝
+# PINK='\e[1;35m' # 粉红
+RES='\e[0m' # 清除颜色
+
 # 帮助函数
 function help()
 {
-	echo "LazyPush 一个命令将 Git 分支提交合并到指定远程分支
+	echo -e "${GREEN}LazyPush 一个命令将 Git 分支提交合并到指定远程分支${RES}
 
 Usage:
 	chmod +x ./lazypush.sh	# 增加可执行权限
@@ -27,7 +35,7 @@ Additional help:
 
 示例:
 
-	gg head '测试提交'
+	gg head '测试提交'	# commit当前所在分支, 合并到开发分支并push
 "
 }
 
@@ -36,9 +44,9 @@ git_run()
 	$cmd
 	if [ $? == 0 ]
 	then
-		echo -e "\n success --- $cmd\n"
+		echo -e "\n ${GREEN}Success: $cmd ${RES}\n"
 	else
-		echo -e "\n fail --- $cmd\n"
+		echo -e "\n ${RED}Fail: $cmd ${RES}\n"
 		exit
 	fi	
 
@@ -54,10 +62,10 @@ git_checkout()
 git_status()
 {
 	git status
-	echo -e "\n确定提交且合并推送到远程测试分支 $remote_branch  吗？\n"
+	echo -e "\n${RED}确定提交且合并推送到远程测试分支 $remote_branch  吗？${RES}\n"
 	echo "注意: 如有未被 git 跟踪的文件需要手动执行 git add 添加再重新执行命令"
 	echo -e " 1 确定提交\n 2 再考虑考虑"
-	echo "输入并回车"
+	echo "输入数字并回车"
 	read -r choice
 	if [ "$choice" != "1"  ]
 	then
@@ -73,8 +81,10 @@ git_commit()
 		remark="fix"
 	fi
 
-	cmd="git commit -a -m $remark"
-	git_run 
+	# cmd="git commit -am \"$remark\""
+	git commit -am "$remark"
+	
+	# git_run 
 }
 
 git_pull()
@@ -109,10 +119,10 @@ confirm_branch()
 	local err=$2
 	if [ "$err" != "0"  ]
 	then
-		echo "请检查当前所在目录，未发现分支"
+		echo -e "${RED}请检查当前所在目录，未发现分支${RES}"
 		exit
 	else
-		echo -e "\n 确定提交分支 $current_branch 吗？\n"
+		echo -e "\n ${RED}确定提交分支 $current_branch 吗？${RES}\n"
 		echo -e " 1 提交 2 不提交\n输入并回车"
 		read -r choice
 		if [ "$choice" != "1" ]
@@ -158,4 +168,5 @@ else
 	git_merge "$branch"
 	git_push "$remote_branch"
 	git_checkout "$branch"
+	echo -e "${GREEN}操作成功!${RES}"
 fi
