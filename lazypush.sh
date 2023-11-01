@@ -1,25 +1,34 @@
 #! /bin/bash
 
-readonly pushbranch="test" #默认推送到的测试分支名
-
 # 帮助函数
 function help()
 {
-	echo "###########################################
-#             懒人提交大法                #
-###########################################
-#            author:jackdou               #
-###########################################
-# 格式：command param1 [param2]           #
-# param1：需要合并提交到测试的分支名称    #
-# param2：提交备注，不填默认为fix         #
-# 举例：./lazypush.sh fixBug '修复bug'    #
-# 建议：将lazypush.sh添加到别名例如 pp    #
-# 优雅：pp fixBug '修复bug'               #
-# 进阶：懒得写分支名?使用pp head [param2] #
-# 即可提交项目的当前分支,一定要确认好哦   #
-# 帮助：使用command help 查看本说明       #
-###########################################"
+	echo "LazyPush 一个命令将 Git 分支提交合并到指定远程分支
+
+Usage:
+	chmod +x ./lazypush.sh	# 增加可执行权限
+
+	./lazypush.sh <branchname> [comment]
+
+The branchname are:
+
+	head			使用当前所在分支
+	branchname		指定需要提交的分支名, 例如 feature_1
+	help			查看本帮助
+
+The comment are:
+
+	本次提交的说明, 不填默认 'fix'
+
+Additional help:
+
+	建议将 layzpush.sh 文件添加到 alias 中
+	alias gg=/项目绝对路径/git-lazypush/lazypush.sh
+
+示例:
+
+	gg head '测试提交'
+"
 }
 
 git_run()
@@ -45,11 +54,11 @@ git_checkout()
 git_status()
 {
 	git status
-	echo -e "\n确定提交并推送到远程测试分支 $pushbranch  吗？\n"
-	echo "注意：如有未被git跟踪的文件需要手动执行git add添加再重新执行命令"
+	echo -e "\n确定提交且合并推送到远程测试分支 $remote_branch  吗？\n"
+	echo "注意: 如有未被 git 跟踪的文件需要手动执行 git add 添加再重新执行命令"
 	echo -e " 1 确定提交\n 2 再考虑考虑"
 	echo "输入并回车"
-	read choice
+	read -r choice
 	if [ "$choice" != "1"  ]
 	then
 		exit
@@ -59,7 +68,7 @@ git_status()
 git_commit()
 {
 	local remark=$1
-	if [ -z $remark ]
+	if [ -z "$remark" ]
 	then
 		remark="fix"
 	fi
@@ -105,7 +114,7 @@ confirm_branch()
 	else
 		echo -e "\n 确定提交分支 $current_branch 吗？\n"
 		echo -e " 1 提交 2 不提交\n输入并回车"
-		read choice
+		read -r choice
 		if [ "$choice" != "1" ]
 		then
 			exit
@@ -114,7 +123,18 @@ confirm_branch()
 	fi
 }
 
-#获取命令
+function get_remote_branch () {
+	if [ -e "./.lazy_git" ]; then
+		 # 配置文件取指定的分支名称
+		 remote_branch=$(grep -E "\S" ./.lazy_git)
+	else
+		 # 没有配置文件时默认远端分支
+		 remote_branch="develop"
+	fi
+}
+
+
+# 1. 获取分支参数
 branch=$1
 
 if [[ -z $branch || $branch = "help" ]] 
@@ -122,18 +142,20 @@ then
 	help
 
 else	
-	if [ $branch = 'head' ]
+	if [ "$branch" = 'head' ]
 	then
 		branch=$(get_current_branch)
 		err=$?
-		confirm_branch $branch $err
+		confirm_branch "$branch" $err
 	fi
-	git_checkout $branch
+	# 2. 获取远端分支名
+	get_remote_branch
+	git_checkout "$branch"
 	git_status
-	git_commit $2
-	git_checkout $pushbranch
-	git_pull $pushbranch
-	git_merge $branch
-	git_push $pushbranch
-	git_checkout $branch
+	git_commit "$2"
+	git_checkout "$remote_branch"
+	git_pull "$remote_branch"
+	git_merge "$branch"
+	git_push "$remote_branch"
+	git_checkout "$branch"
 fi
