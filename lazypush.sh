@@ -39,27 +39,28 @@ Additional help:
 "
 }
 
-git_run()
+function run_success()
 {
-	$cmd
-	if [ $? == 0 ]
-	then
-		echo -e "\n ${GREEN}Success: $cmd ${RES}\n"
-	else
-		echo -e "\n ${RED}Fail: $cmd ${RES}\n"
-		exit
-	fi	
-
+	echo -e "\n ${GREEN}Success: $cmd ${RES}\n"
 }
 
-git_checkout()
+function run_fail () {
+	echo -e "\n ${RED}Fail: $cmd ${RES}\n"
+	exit
+}
+
+function git_checkout()
 {
 	local branch=$1
 	cmd="git checkout $branch"
-	git_run 
+	if $cmd; then
+		run_success
+	else
+		run_fail
+	fi
 }
 
-git_status()
+function git_status()
 {
 	git status
 	echo -e "\n${RED}确定提交且合并推送到远程测试分支 $remote_branch  吗？${RES}\n"
@@ -67,53 +68,65 @@ git_status()
 	echo -e " 1 确定提交\n 2 再考虑考虑"
 	echo "输入数字并回车"
 	read -r choice
-	if [ "$choice" != "1"  ]
-	then
+	if [ "$choice" != "1"  ]; then
 		exit
 	fi
 }
 
-git_commit()
+function git_commit()
 {
 	local remark=$1
-	if [ -z "$remark" ]
-	then
+	if [ -z "$remark" ]; then
 		remark="fix"
 	fi
 
-	# cmd="git commit -am \"$remark\""
-	git commit -am "$remark"
-	
-	# git_run 
+	cmd="git commit -am \"$remark\""
+	if git commit -am "$remark"; then
+		run_success
+	else
+		run_fail
+	fi
 }
 
-git_pull()
+function git_pull()
 {
 	local push_branch=$1
 	cmd="git pull origin $push_branch"
-	git_run 
+	if $cmd; then
+		run_success
+	else
+		run_fail
+	fi
 }
 
-git_merge()
+function git_merge()
 {
 	local branch=$1
 	cmd="git merge $branch"
-	git_run 
+	if $cmd; then
+		run_success
+	else
+		run_fail
+	fi
 }
 
-git_push()
+function git_push()
 {
 	local push_branch=$1
 	cmd="git push origin $push_branch"
-	git_run 
+	if $cmd; then
+		run_success
+	else 
+		run_fail
+	fi
 }
 
-get_current_branch()
+function get_current_branch()
 {
 	git symbolic-ref --short -q HEAD
 }
 
-confirm_branch()
+function confirm_branch()
 {
 	local current_branch=$1
 	local err=$2
